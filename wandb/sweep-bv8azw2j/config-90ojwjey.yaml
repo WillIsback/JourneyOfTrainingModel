@@ -1,0 +1,14 @@
+wandb_version: 1
+
+embed_size:
+  value: 256
+hidden_size:
+  value: 512
+learning_rate:
+  value: 0.0091077917748871
+num_epochs:
+  value: 1
+num_layers:
+  value: 2
+patience:
+  value: 2

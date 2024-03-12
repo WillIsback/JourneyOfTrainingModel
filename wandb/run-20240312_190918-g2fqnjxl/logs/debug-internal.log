@@ -1,0 +1,217 @@
+2024-03-12 19:09:18,416 INFO    StreamThr :3410772 [internal.py:wandb_internal():86] W&B internal server running at pid: 3410772, started at: 2024-03-12 19:09:18.415406
+2024-03-12 19:09:18,418 DEBUG   HandlerThread:3410772 [handler.py:handle_request():146] handle_request: status
+2024-03-12 19:09:18,423 INFO    WriterThread:3410772 [datastore.py:open_for_write():87] open: /home/will/MyFirstAI/wandb/run-20240312_190918-g2fqnjxl/run-g2fqnjxl.wandb
+2024-03-12 19:09:18,424 DEBUG   SenderThread:3410772 [sender.py:send():378] send: header
+2024-03-12 19:09:18,424 DEBUG   SenderThread:3410772 [sender.py:send():378] send: run
+2024-03-12 19:09:18,830 INFO    SenderThread:3410772 [dir_watcher.py:__init__():211] watching files in: /home/will/MyFirstAI/wandb/run-20240312_190918-g2fqnjxl/files
+2024-03-12 19:09:18,830 INFO    SenderThread:3410772 [sender.py:_start_run_threads():1099] run started: g2fqnjxl with start time 1710266958.414537
+2024-03-12 19:09:18,839 DEBUG   HandlerThread:3410772 [handler.py:handle_request():146] handle_request: check_version
+2024-03-12 19:09:18,839 DEBUG   SenderThread:3410772 [sender.py:send_request():405] send_request: check_version
+2024-03-12 19:09:18,973 DEBUG   HandlerThread:3410772 [handler.py:handle_request():146] handle_request: run_start
+2024-03-12 19:09:18,987 DEBUG   HandlerThread:3410772 [system_info.py:__init__():26] System info init
+2024-03-12 19:09:18,987 DEBUG   HandlerThread:3410772 [system_info.py:__init__():41] System info init done
+2024-03-12 19:09:18,987 INFO    HandlerThread:3410772 [system_monitor.py:start():194] Starting system monitor
+2024-03-12 19:09:18,987 INFO    SystemMonitor:3410772 [system_monitor.py:_start():158] Starting system asset monitoring threads
+2024-03-12 19:09:18,988 INFO    HandlerThread:3410772 [system_monitor.py:probe():214] Collecting system info
+2024-03-12 19:09:18,989 INFO    SystemMonitor:3410772 [interfaces.py:start():190] Started cpu monitoring
+2024-03-12 19:09:18,990 INFO    SystemMonitor:3410772 [interfaces.py:start():190] Started disk monitoring
+2024-03-12 19:09:18,992 INFO    SystemMonitor:3410772 [interfaces.py:start():190] Started gpu monitoring
+2024-03-12 19:09:18,994 INFO    SystemMonitor:3410772 [interfaces.py:start():190] Started memory monitoring
+2024-03-12 19:09:18,996 INFO    SystemMonitor:3410772 [interfaces.py:start():190] Started network monitoring
+2024-03-12 19:09:19,010 DEBUG   HandlerThread:3410772 [system_info.py:probe():150] Probing system
+2024-03-12 19:09:19,059 DEBUG   HandlerThread:3410772 [gitlib.py:_init_repo():56] git repository is invalid
+2024-03-12 19:09:19,059 DEBUG   HandlerThread:3410772 [system_info.py:probe():198] Probing system done
+2024-03-12 19:09:19,059 DEBUG   HandlerThread:3410772 [system_monitor.py:probe():223] {'os': 'Linux-5.15.133.1-microsoft-standard-WSL2-x86_64-with-glibc2.35', 'python': '3.10.12', 'heartbeatAt': '2024-03-12T18:09:19.010438', 'startedAt': '2024-03-12T18:09:18.404782', 'docker': None, 'cuda': None, 'args': (), 'state': 'running', 'program': '/home/will/MyFirstAI/main.py', 'codePathLocal': 'main.py', 'codePath': 'main.py', 'host': 'DESKTOP-KODELPV', 'username': 'will', 'executable': '/home/will/MyFirstAI/venv/bin/python3', 'cpu_count': 8, 'cpu_count_logical': 16, 'cpu_freq': {'current': 3700.120000000001, 'min': 0.0, 'max': 0.0}, 'cpu_freq_per_core': [{'current': 3700.12, 'min': 0.0, 'max': 0.0}, {'current': 3700.12, 'min': 0.0, 'max': 0.0}, {'current': 3700.12, 'min': 0.0, 'max': 0.0}, {'current': 3700.12, 'min': 0.0, 'max': 0.0}, {'current': 3700.12, 'min': 0.0, 'max': 0.0}, {'current': 3700.12, 'min': 0.0, 'max': 0.0}, {'current': 3700.12, 'min': 0.0, 'max': 0.0}, {'current': 3700.12, 'min': 0.0, 'max': 0.0}, {'current': 3700.12, 'min': 0.0, 'max': 0.0}, {'current': 3700.12, 'min': 0.0, 'max': 0.0}, {'current': 3700.12, 'min': 0.0, 'max': 0.0}, {'current': 3700.12, 'min': 0.0, 'max': 0.0}, {'current': 3700.12, 'min': 0.0, 'max': 0.0}, {'current': 3700.12, 'min': 0.0, 'max': 0.0}, {'current': 3700.12, 'min': 0.0, 'max': 0.0}, {'current': 3700.12, 'min': 0.0, 'max': 0.0}], 'disk': {'/': {'total': 1006.853931427002, 'used': 88.94990539550781}}, 'gpu': 'NVIDIA GeForce RTX 2080 Ti', 'gpu_count': 1, 'gpu_devices': [{'name': 'NVIDIA GeForce RTX 2080 Ti', 'memory_total': 11811160064}], 'memory': {'total': 15.594058990478516}}
+2024-03-12 19:09:19,059 INFO    HandlerThread:3410772 [system_monitor.py:probe():224] Finished collecting system info
+2024-03-12 19:09:19,060 INFO    HandlerThread:3410772 [system_monitor.py:probe():227] Publishing system info
+2024-03-12 19:09:19,060 INFO    HandlerThread:3410772 [system_monitor.py:probe():229] Finished publishing system info
+2024-03-12 19:09:19,064 DEBUG   SenderThread:3410772 [sender.py:send():378] send: files
+2024-03-12 19:09:19,064 INFO    SenderThread:3410772 [sender.py:_save_file():1365] saving file wandb-metadata.json with policy now
+2024-03-12 19:09:19,102 DEBUG   HandlerThread:3410772 [handler.py:handle_request():146] handle_request: python_packages
+2024-03-12 19:09:19,103 DEBUG   SenderThread:3410772 [sender.py:send_request():405] send_request: python_packages
+2024-03-12 19:09:19,105 DEBUG   HandlerThread:3410772 [handler.py:handle_request():146] handle_request: stop_status
+2024-03-12 19:09:19,105 DEBUG   SenderThread:3410772 [sender.py:send_request():405] send_request: stop_status
+2024-03-12 19:09:19,107 DEBUG   HandlerThread:3410772 [handler.py:handle_request():146] handle_request: internal_messages
+2024-03-12 19:09:19,404 DEBUG   SenderThread:3410772 [sender.py:send():378] send: telemetry
+2024-03-12 19:09:19,662 INFO    wandb-upload_0:3410772 [upload_job.py:push():131] Uploaded file /tmp/tmpp69hub2vwandb/ekww89jo-wandb-metadata.json
+2024-03-12 19:09:19,831 INFO    Thread-12 :3410772 [dir_watcher.py:_on_file_created():271] file/dir created: /home/will/MyFirstAI/wandb/run-20240312_190918-g2fqnjxl/files/wandb-metadata.json
+2024-03-12 19:09:19,832 INFO    Thread-12 :3410772 [dir_watcher.py:_on_file_created():271] file/dir created: /home/will/MyFirstAI/wandb/run-20240312_190918-g2fqnjxl/files/requirements.txt
+2024-03-12 19:09:20,155 DEBUG   HandlerThread:3410772 [handler.py:handle_request():146] handle_request: partial_history
+2024-03-12 19:09:20,156 DEBUG   SenderThread:3410772 [sender.py:send():378] send: history
+2024-03-12 19:09:20,157 DEBUG   SenderThread:3410772 [sender.py:send_request():405] send_request: summary_record
+2024-03-12 19:09:20,157 INFO    SenderThread:3410772 [sender.py:_save_file():1365] saving file wandb-summary.json with policy end
+2024-03-12 19:09:20,452 DEBUG   HandlerThread:3410772 [handler.py:handle_request():146] handle_request: partial_history
+2024-03-12 19:09:20,453 DEBUG   SenderThread:3410772 [sender.py:send():378] send: history
+2024-03-12 19:09:20,453 DEBUG   SenderThread:3410772 [sender.py:send_request():405] send_request: summary_record
+2024-03-12 19:09:20,454 INFO    SenderThread:3410772 [sender.py:_save_file():1365] saving file wandb-summary.json with policy end
+2024-03-12 19:09:20,741 DEBUG   HandlerThread:3410772 [handler.py:handle_request():146] handle_request: partial_history
+2024-03-12 19:09:20,742 DEBUG   SenderThread:3410772 [sender.py:send():378] send: history
+2024-03-12 19:09:20,742 DEBUG   SenderThread:3410772 [sender.py:send_request():405] send_request: summary_record
+2024-03-12 19:09:20,743 INFO    SenderThread:3410772 [sender.py:_save_file():1365] saving file wandb-summary.json with policy end
+2024-03-12 19:09:20,831 INFO    Thread-12 :3410772 [dir_watcher.py:_on_file_created():271] file/dir created: /home/will/MyFirstAI/wandb/run-20240312_190918-g2fqnjxl/files/wandb-summary.json
+2024-03-12 19:09:20,832 DEBUG   HandlerThread:3410772 [handler.py:handle_request():146] handle_request: partial_history
+2024-03-12 19:09:20,832 DEBUG   SenderThread:3410772 [sender.py:send():378] send: history
+2024-03-12 19:09:20,833 DEBUG   SenderThread:3410772 [sender.py:send_request():405] send_request: summary_record
+2024-03-12 19:09:20,834 INFO    SenderThread:3410772 [sender.py:_save_file():1365] saving file wandb-summary.json with policy end
+2024-03-12 19:09:21,742 DEBUG   HandlerThread:3410772 [handler.py:handle_request():146] handle_request: partial_history
+2024-03-12 19:09:21,743 DEBUG   SenderThread:3410772 [sender.py:send():378] send: history
+2024-03-12 19:09:21,743 DEBUG   SenderThread:3410772 [sender.py:send_request():405] send_request: summary_record
+2024-03-12 19:09:21,744 INFO    SenderThread:3410772 [sender.py:_save_file():1365] saving file wandb-summary.json with policy end
+2024-03-12 19:09:21,831 INFO    Thread-12 :3410772 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/will/MyFirstAI/wandb/run-20240312_190918-g2fqnjxl/files/wandb-summary.json
+2024-03-12 19:09:21,832 INFO    Thread-12 :3410772 [dir_watcher.py:_on_file_created():271] file/dir created: /home/will/MyFirstAI/wandb/run-20240312_190918-g2fqnjxl/files/output.log
+2024-03-12 19:09:22,535 DEBUG   HandlerThread:3410772 [handler.py:handle_request():146] handle_request: partial_history
+2024-03-12 19:09:22,536 DEBUG   SenderThread:3410772 [sender.py:send():378] send: history
+2024-03-12 19:09:22,536 DEBUG   SenderThread:3410772 [sender.py:send_request():405] send_request: summary_record
+2024-03-12 19:09:22,537 INFO    SenderThread:3410772 [sender.py:_save_file():1365] saving file wandb-summary.json with policy end
+2024-03-12 19:09:22,832 INFO    Thread-12 :3410772 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/will/MyFirstAI/wandb/run-20240312_190918-g2fqnjxl/files/wandb-summary.json
+2024-03-12 19:09:22,887 DEBUG   HandlerThread:3410772 [handler.py:handle_request():146] handle_request: partial_history
+2024-03-12 19:09:22,888 DEBUG   SenderThread:3410772 [sender.py:send():378] send: history
+2024-03-12 19:09:22,888 DEBUG   SenderThread:3410772 [sender.py:send_request():405] send_request: summary_record
+2024-03-12 19:09:22,889 INFO    SenderThread:3410772 [sender.py:_save_file():1365] saving file wandb-summary.json with policy end
+2024-03-12 19:09:23,223 DEBUG   HandlerThread:3410772 [handler.py:handle_request():146] handle_request: partial_history
+2024-03-12 19:09:23,223 DEBUG   SenderThread:3410772 [sender.py:send():378] send: history
+2024-03-12 19:09:23,224 DEBUG   SenderThread:3410772 [sender.py:send_request():405] send_request: summary_record
+2024-03-12 19:09:23,224 INFO    SenderThread:3410772 [sender.py:_save_file():1365] saving file wandb-summary.json with policy end
+2024-03-12 19:09:23,279 DEBUG   HandlerThread:3410772 [handler.py:handle_request():146] handle_request: partial_history
+2024-03-12 19:09:23,280 DEBUG   SenderThread:3410772 [sender.py:send():378] send: history
+2024-03-12 19:09:23,281 DEBUG   SenderThread:3410772 [sender.py:send_request():405] send_request: summary_record
+2024-03-12 19:09:23,281 INFO    SenderThread:3410772 [sender.py:_save_file():1365] saving file wandb-summary.json with policy end
+2024-03-12 19:09:23,832 INFO    Thread-12 :3410772 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/will/MyFirstAI/wandb/run-20240312_190918-g2fqnjxl/files/output.log
+2024-03-12 19:09:23,833 INFO    Thread-12 :3410772 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/will/MyFirstAI/wandb/run-20240312_190918-g2fqnjxl/files/wandb-summary.json
+2024-03-12 19:09:24,210 DEBUG   HandlerThread:3410772 [handler.py:handle_request():146] handle_request: partial_history
+2024-03-12 19:09:24,210 DEBUG   HandlerThread:3410772 [handler.py:handle_request():146] handle_request: status_report
+2024-03-12 19:09:24,211 DEBUG   SenderThread:3410772 [sender.py:send():378] send: history
+2024-03-12 19:09:24,211 DEBUG   SenderThread:3410772 [sender.py:send_request():405] send_request: summary_record
+2024-03-12 19:09:24,211 INFO    SenderThread:3410772 [sender.py:_save_file():1365] saving file wandb-summary.json with policy end
+2024-03-12 19:09:24,634 DEBUG   SenderThread:3410772 [sender.py:send():378] send: telemetry
+2024-03-12 19:09:24,635 DEBUG   SenderThread:3410772 [sender.py:send():378] send: exit
+2024-03-12 19:09:24,635 INFO    SenderThread:3410772 [sender.py:send_exit():585] handling exit code: 0
+2024-03-12 19:09:24,636 INFO    SenderThread:3410772 [sender.py:send_exit():587] handling runtime: 5
+2024-03-12 19:09:24,636 INFO    SenderThread:3410772 [sender.py:_save_file():1365] saving file wandb-summary.json with policy end
+2024-03-12 19:09:24,636 INFO    SenderThread:3410772 [sender.py:send_exit():593] send defer
+2024-03-12 19:09:24,637 DEBUG   HandlerThread:3410772 [handler.py:handle_request():146] handle_request: defer
+2024-03-12 19:09:24,637 INFO    HandlerThread:3410772 [handler.py:handle_request_defer():172] handle defer: 0
+2024-03-12 19:09:24,637 DEBUG   SenderThread:3410772 [sender.py:send_request():405] send_request: defer
+2024-03-12 19:09:24,637 INFO    SenderThread:3410772 [sender.py:send_request_defer():609] handle sender defer: 0
+2024-03-12 19:09:24,637 INFO    SenderThread:3410772 [sender.py:transition_state():613] send defer: 1
+2024-03-12 19:09:24,638 DEBUG   HandlerThread:3410772 [handler.py:handle_request():146] handle_request: defer
+2024-03-12 19:09:24,638 INFO    HandlerThread:3410772 [handler.py:handle_request_defer():172] handle defer: 1
+2024-03-12 19:09:24,638 DEBUG   SenderThread:3410772 [sender.py:send_request():405] send_request: defer
+2024-03-12 19:09:24,638 INFO    SenderThread:3410772 [sender.py:send_request_defer():609] handle sender defer: 1
+2024-03-12 19:09:24,638 INFO    SenderThread:3410772 [sender.py:transition_state():613] send defer: 2
+2024-03-12 19:09:24,638 DEBUG   HandlerThread:3410772 [handler.py:handle_request():146] handle_request: defer
+2024-03-12 19:09:24,639 INFO    HandlerThread:3410772 [handler.py:handle_request_defer():172] handle defer: 2
+2024-03-12 19:09:24,639 INFO    HandlerThread:3410772 [system_monitor.py:finish():203] Stopping system monitor
+2024-03-12 19:09:24,639 DEBUG   SystemMonitor:3410772 [system_monitor.py:_start():172] Starting system metrics aggregation loop
+2024-03-12 19:09:24,640 DEBUG   SystemMonitor:3410772 [system_monitor.py:_start():179] Finished system metrics aggregation loop
+2024-03-12 19:09:24,640 INFO    HandlerThread:3410772 [interfaces.py:finish():202] Joined cpu monitor
+2024-03-12 19:09:24,640 DEBUG   SystemMonitor:3410772 [system_monitor.py:_start():183] Publishing last batch of metrics
+2024-03-12 19:09:24,640 INFO    HandlerThread:3410772 [interfaces.py:finish():202] Joined disk monitor
+2024-03-12 19:09:24,661 INFO    HandlerThread:3410772 [interfaces.py:finish():202] Joined gpu monitor
+2024-03-12 19:09:24,661 INFO    HandlerThread:3410772 [interfaces.py:finish():202] Joined memory monitor
+2024-03-12 19:09:24,662 INFO    HandlerThread:3410772 [interfaces.py:finish():202] Joined network monitor
+2024-03-12 19:09:24,662 DEBUG   SenderThread:3410772 [sender.py:send_request():405] send_request: defer
+2024-03-12 19:09:24,662 INFO    SenderThread:3410772 [sender.py:send_request_defer():609] handle sender defer: 2
+2024-03-12 19:09:24,662 INFO    SenderThread:3410772 [sender.py:transition_state():613] send defer: 3
+2024-03-12 19:09:24,662 DEBUG   SenderThread:3410772 [sender.py:send():378] send: stats
+2024-03-12 19:09:24,663 DEBUG   HandlerThread:3410772 [handler.py:handle_request():146] handle_request: defer
+2024-03-12 19:09:24,663 INFO    HandlerThread:3410772 [handler.py:handle_request_defer():172] handle defer: 3
+2024-03-12 19:09:24,664 DEBUG   SenderThread:3410772 [sender.py:send_request():405] send_request: defer
+2024-03-12 19:09:24,664 INFO    SenderThread:3410772 [sender.py:send_request_defer():609] handle sender defer: 3
+2024-03-12 19:09:24,664 INFO    SenderThread:3410772 [sender.py:transition_state():613] send defer: 4
+2024-03-12 19:09:24,664 DEBUG   HandlerThread:3410772 [handler.py:handle_request():146] handle_request: defer
+2024-03-12 19:09:24,664 INFO    HandlerThread:3410772 [handler.py:handle_request_defer():172] handle defer: 4
+2024-03-12 19:09:24,664 DEBUG   SenderThread:3410772 [sender.py:send_request():405] send_request: defer
+2024-03-12 19:09:24,664 INFO    SenderThread:3410772 [sender.py:send_request_defer():609] handle sender defer: 4
+2024-03-12 19:09:24,664 INFO    SenderThread:3410772 [sender.py:transition_state():613] send defer: 5
+2024-03-12 19:09:24,665 DEBUG   HandlerThread:3410772 [handler.py:handle_request():146] handle_request: defer
+2024-03-12 19:09:24,665 INFO    HandlerThread:3410772 [handler.py:handle_request_defer():172] handle defer: 5
+2024-03-12 19:09:24,665 DEBUG   SenderThread:3410772 [sender.py:send():378] send: summary
+2024-03-12 19:09:24,666 INFO    SenderThread:3410772 [sender.py:_save_file():1365] saving file wandb-summary.json with policy end
+2024-03-12 19:09:24,666 DEBUG   SenderThread:3410772 [sender.py:send_request():405] send_request: defer
+2024-03-12 19:09:24,666 INFO    SenderThread:3410772 [sender.py:send_request_defer():609] handle sender defer: 5
+2024-03-12 19:09:24,666 INFO    SenderThread:3410772 [sender.py:transition_state():613] send defer: 6
+2024-03-12 19:09:24,666 DEBUG   HandlerThread:3410772 [handler.py:handle_request():146] handle_request: defer
+2024-03-12 19:09:24,666 INFO    HandlerThread:3410772 [handler.py:handle_request_defer():172] handle defer: 6
+2024-03-12 19:09:24,666 DEBUG   SenderThread:3410772 [sender.py:send_request():405] send_request: defer
+2024-03-12 19:09:24,666 INFO    SenderThread:3410772 [sender.py:send_request_defer():609] handle sender defer: 6
+2024-03-12 19:09:24,670 DEBUG   HandlerThread:3410772 [handler.py:handle_request():146] handle_request: status_report
+2024-03-12 19:09:24,825 INFO    SenderThread:3410772 [sender.py:transition_state():613] send defer: 7
+2024-03-12 19:09:24,825 DEBUG   HandlerThread:3410772 [handler.py:handle_request():146] handle_request: defer
+2024-03-12 19:09:24,825 INFO    HandlerThread:3410772 [handler.py:handle_request_defer():172] handle defer: 7
+2024-03-12 19:09:24,826 DEBUG   SenderThread:3410772 [sender.py:send_request():405] send_request: defer
+2024-03-12 19:09:24,826 INFO    SenderThread:3410772 [sender.py:send_request_defer():609] handle sender defer: 7
+2024-03-12 19:09:24,833 INFO    Thread-12 :3410772 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/will/MyFirstAI/wandb/run-20240312_190918-g2fqnjxl/files/wandb-summary.json
+2024-03-12 19:09:24,833 INFO    Thread-12 :3410772 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/will/MyFirstAI/wandb/run-20240312_190918-g2fqnjxl/files/config.yaml
+2024-03-12 19:09:25,635 DEBUG   HandlerThread:3410772 [handler.py:handle_request():146] handle_request: poll_exit
+2024-03-12 19:09:25,750 INFO    SenderThread:3410772 [sender.py:transition_state():613] send defer: 8
+2024-03-12 19:09:25,751 DEBUG   SenderThread:3410772 [sender.py:send_request():405] send_request: poll_exit
+2024-03-12 19:09:25,751 DEBUG   HandlerThread:3410772 [handler.py:handle_request():146] handle_request: defer
+2024-03-12 19:09:25,751 INFO    HandlerThread:3410772 [handler.py:handle_request_defer():172] handle defer: 8
+2024-03-12 19:09:25,752 DEBUG   SenderThread:3410772 [sender.py:send_request():405] send_request: defer
+2024-03-12 19:09:25,752 INFO    SenderThread:3410772 [sender.py:send_request_defer():609] handle sender defer: 8
+2024-03-12 19:09:25,752 INFO    SenderThread:3410772 [sender.py:transition_state():613] send defer: 9
+2024-03-12 19:09:25,752 DEBUG   HandlerThread:3410772 [handler.py:handle_request():146] handle_request: defer
+2024-03-12 19:09:25,752 INFO    HandlerThread:3410772 [handler.py:handle_request_defer():172] handle defer: 9
+2024-03-12 19:09:25,752 DEBUG   SenderThread:3410772 [sender.py:send_request():405] send_request: defer
+2024-03-12 19:09:25,753 INFO    SenderThread:3410772 [sender.py:send_request_defer():609] handle sender defer: 9
+2024-03-12 19:09:25,753 INFO    SenderThread:3410772 [dir_watcher.py:finish():358] shutting down directory watcher
+2024-03-12 19:09:25,833 INFO    Thread-12 :3410772 [dir_watcher.py:_on_file_modified():288] file/dir modified: /home/will/MyFirstAI/wandb/run-20240312_190918-g2fqnjxl/files/output.log
+2024-03-12 19:09:25,834 INFO    SenderThread:3410772 [dir_watcher.py:finish():388] scan: /home/will/MyFirstAI/wandb/run-20240312_190918-g2fqnjxl/files
+2024-03-12 19:09:25,834 INFO    SenderThread:3410772 [dir_watcher.py:finish():402] scan save: /home/will/MyFirstAI/wandb/run-20240312_190918-g2fqnjxl/files/wandb-summary.json wandb-summary.json
+2024-03-12 19:09:25,834 INFO    SenderThread:3410772 [dir_watcher.py:finish():402] scan save: /home/will/MyFirstAI/wandb/run-20240312_190918-g2fqnjxl/files/output.log output.log
+2024-03-12 19:09:25,834 INFO    SenderThread:3410772 [dir_watcher.py:finish():402] scan save: /home/will/MyFirstAI/wandb/run-20240312_190918-g2fqnjxl/files/requirements.txt requirements.txt
+2024-03-12 19:09:25,837 INFO    SenderThread:3410772 [dir_watcher.py:finish():402] scan save: /home/will/MyFirstAI/wandb/run-20240312_190918-g2fqnjxl/files/wandb-metadata.json wandb-metadata.json
+2024-03-12 19:09:25,837 INFO    SenderThread:3410772 [dir_watcher.py:finish():402] scan save: /home/will/MyFirstAI/wandb/run-20240312_190918-g2fqnjxl/files/config.yaml config.yaml
+2024-03-12 19:09:25,838 INFO    SenderThread:3410772 [sender.py:transition_state():613] send defer: 10
+2024-03-12 19:09:25,840 DEBUG   HandlerThread:3410772 [handler.py:handle_request():146] handle_request: defer
+2024-03-12 19:09:25,841 INFO    HandlerThread:3410772 [handler.py:handle_request_defer():172] handle defer: 10
+2024-03-12 19:09:25,844 DEBUG   SenderThread:3410772 [sender.py:send_request():405] send_request: defer
+2024-03-12 19:09:25,844 INFO    SenderThread:3410772 [sender.py:send_request_defer():609] handle sender defer: 10
+2024-03-12 19:09:25,845 INFO    SenderThread:3410772 [file_pusher.py:finish():172] shutting down file pusher
+2024-03-12 19:09:26,199 INFO    wandb-upload_1:3410772 [upload_job.py:push():131] Uploaded file /home/will/MyFirstAI/wandb/run-20240312_190918-g2fqnjxl/files/output.log
+2024-03-12 19:09:26,291 INFO    wandb-upload_0:3410772 [upload_job.py:push():131] Uploaded file /home/will/MyFirstAI/wandb/run-20240312_190918-g2fqnjxl/files/wandb-summary.json
+2024-03-12 19:09:26,403 INFO    wandb-upload_2:3410772 [upload_job.py:push():131] Uploaded file /home/will/MyFirstAI/wandb/run-20240312_190918-g2fqnjxl/files/requirements.txt
+2024-03-12 19:09:26,407 INFO    wandb-upload_3:3410772 [upload_job.py:push():131] Uploaded file /home/will/MyFirstAI/wandb/run-20240312_190918-g2fqnjxl/files/config.yaml
+2024-03-12 19:09:26,608 INFO    Thread-11 (_thread_body):3410772 [sender.py:transition_state():613] send defer: 11
+2024-03-12 19:09:26,609 DEBUG   HandlerThread:3410772 [handler.py:handle_request():146] handle_request: defer
+2024-03-12 19:09:26,609 INFO    HandlerThread:3410772 [handler.py:handle_request_defer():172] handle defer: 11
+2024-03-12 19:09:26,610 DEBUG   SenderThread:3410772 [sender.py:send_request():405] send_request: defer
+2024-03-12 19:09:26,610 INFO    SenderThread:3410772 [sender.py:send_request_defer():609] handle sender defer: 11
+2024-03-12 19:09:26,610 INFO    SenderThread:3410772 [file_pusher.py:join():178] waiting for file pusher
+2024-03-12 19:09:26,610 INFO    SenderThread:3410772 [sender.py:transition_state():613] send defer: 12
+2024-03-12 19:09:26,610 DEBUG   HandlerThread:3410772 [handler.py:handle_request():146] handle_request: defer
+2024-03-12 19:09:26,611 INFO    HandlerThread:3410772 [handler.py:handle_request_defer():172] handle defer: 12
+2024-03-12 19:09:26,611 DEBUG   SenderThread:3410772 [sender.py:send_request():405] send_request: defer
+2024-03-12 19:09:26,611 INFO    SenderThread:3410772 [sender.py:send_request_defer():609] handle sender defer: 12
+2024-03-12 19:09:26,611 INFO    SenderThread:3410772 [file_stream.py:finish():595] file stream finish called
+2024-03-12 19:09:26,636 DEBUG   HandlerThread:3410772 [handler.py:handle_request():146] handle_request: poll_exit
+2024-03-12 19:09:26,752 INFO    SenderThread:3410772 [file_stream.py:finish():599] file stream finish is done
+2024-03-12 19:09:26,752 INFO    SenderThread:3410772 [sender.py:transition_state():613] send defer: 13
+2024-03-12 19:09:26,752 DEBUG   SenderThread:3410772 [sender.py:send_request():405] send_request: poll_exit
+2024-03-12 19:09:26,752 DEBUG   HandlerThread:3410772 [handler.py:handle_request():146] handle_request: defer
+2024-03-12 19:09:26,753 INFO    HandlerThread:3410772 [handler.py:handle_request_defer():172] handle defer: 13
+2024-03-12 19:09:26,753 DEBUG   SenderThread:3410772 [sender.py:send_request():405] send_request: defer
+2024-03-12 19:09:26,753 INFO    SenderThread:3410772 [sender.py:send_request_defer():609] handle sender defer: 13
+2024-03-12 19:09:26,753 INFO    SenderThread:3410772 [sender.py:transition_state():613] send defer: 14
+2024-03-12 19:09:26,754 DEBUG   HandlerThread:3410772 [handler.py:handle_request():146] handle_request: defer
+2024-03-12 19:09:26,754 DEBUG   SenderThread:3410772 [sender.py:send():378] send: final
+2024-03-12 19:09:26,754 INFO    HandlerThread:3410772 [handler.py:handle_request_defer():172] handle defer: 14
+2024-03-12 19:09:26,754 DEBUG   SenderThread:3410772 [sender.py:send():378] send: footer
+2024-03-12 19:09:26,754 DEBUG   SenderThread:3410772 [sender.py:send_request():405] send_request: defer
+2024-03-12 19:09:26,754 INFO    SenderThread:3410772 [sender.py:send_request_defer():609] handle sender defer: 14
+2024-03-12 19:09:26,755 DEBUG   HandlerThread:3410772 [handler.py:handle_request():146] handle_request: poll_exit
+2024-03-12 19:09:26,756 DEBUG   SenderThread:3410772 [sender.py:send_request():405] send_request: poll_exit
+2024-03-12 19:09:26,757 DEBUG   HandlerThread:3410772 [handler.py:handle_request():146] handle_request: internal_messages
+2024-03-12 19:09:26,757 DEBUG   HandlerThread:3410772 [handler.py:handle_request():146] handle_request: server_info
+2024-03-12 19:09:26,757 DEBUG   SenderThread:3410772 [sender.py:send_request():405] send_request: server_info
+2024-03-12 19:09:26,806 DEBUG   HandlerThread:3410772 [handler.py:handle_request():146] handle_request: get_summary
+2024-03-12 19:09:26,806 DEBUG   HandlerThread:3410772 [handler.py:handle_request():146] handle_request: sampled_history
+2024-03-12 19:09:26,807 DEBUG   HandlerThread:3410772 [handler.py:handle_request():146] handle_request: job_info
+2024-03-12 19:09:26,888 DEBUG   SenderThread:3410772 [sender.py:send_request():405] send_request: job_info
+2024-03-12 19:09:26,889 DEBUG   HandlerThread:3410772 [handler.py:handle_request():146] handle_request: shutdown
+2024-03-12 19:09:26,889 INFO    HandlerThread:3410772 [handler.py:finish():869] shutting down handler
+2024-03-12 19:09:27,808 INFO    WriterThread:3410772 [datastore.py:close():296] close: /home/will/MyFirstAI/wandb/run-20240312_190918-g2fqnjxl/run-g2fqnjxl.wandb
+2024-03-12 19:09:27,889 INFO    SenderThread:3410772 [sender.py:finish():1521] shutting down sender
+2024-03-12 19:09:27,889 INFO    SenderThread:3410772 [file_pusher.py:finish():172] shutting down file pusher
+2024-03-12 19:09:27,889 INFO    SenderThread:3410772 [file_pusher.py:join():178] waiting for file pusher
