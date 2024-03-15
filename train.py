@@ -6,6 +6,7 @@ from model import CNN_to_RNN
 from data_preprocessing import train_loader, val_loader, vocab
 import wandb
 import json
+from tqdm import tqdm
 
 # Check if GPU is available
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
@@ -46,7 +47,9 @@ def train(config=None):
     # Training loop
     for epoch in range(config.num_epochs):
         model.train()
-        for i, (images, captions, lengths) in enumerate(train_loader):
+        total_train_loss = 0  # Initialize total_train_loss
+        total_train_samples = 0  # Initialize total_train_samples
+        for i, (images, captions, lengths) in enumerate(tqdm(train_loader, desc=f"Training Epoch {epoch+1}")):
             # Move data to the correct device
             images = images.to(device)
             captions = captions.to(device)
@@ -58,14 +61,18 @@ def train(config=None):
             outputs = outputs[:targets.size(0)]  # Remove the extra outputs due to padding
             loss = criterion(outputs, targets)
 
-
             # Backward pass and optimization
             model.zero_grad()
             loss.backward()
             optimizer.step()
 
-            # Log the training loss to wandb
-            wandb.log({"Training Loss": loss.item()})
+            # Update total_train_loss and total_train_samples
+            total_train_loss += loss.item() * images.size(0)
+            total_train_samples += targets.size(0)
+
+        # Calculate and log the average training loss
+        avg_train_loss = total_train_loss / total_train_samples
+        wandb.log({"Training Loss": avg_train_loss,})
 
         # Validation phase
         model.eval()
@@ -73,7 +80,7 @@ def train(config=None):
             total_loss = 0  # Initialize total_loss
             total_samples = 0  # Initialize total_samples
             total_correct = 0  # Initialize total_correct
-            for i, (images, captions, lengths) in enumerate(val_loader):
+            for i, (images, captions, lengths) in enumerate(tqdm(val_loader, desc=f"Validation Epoch {epoch+1}")):
                 images = images.to(device)
                 captions = captions.to(device)
                 targets = pack_padded_sequence(captions, lengths, batch_first=True)[0]
@@ -83,7 +90,7 @@ def train(config=None):
                 outputs = outputs[:targets.size(0)]  # Remove the extra outputs due to padding
                 loss = criterion(outputs, targets)
                 total_loss += loss.item() * images.size(0)
-                total_samples += images.size(0)
+                total_samples += targets.size(0)
 
                 # Calculate the number of correct predictions
                 _, predicted = outputs.max(1)
@@ -93,8 +100,9 @@ def train(config=None):
             accuracy = total_correct / total_samples
             print(f"Validation Loss: {avg_loss}, Accuracy: {accuracy}")
 
-            # Log the validation loss and accuracy to wandb
-            wandb.log({"Validation Loss": avg_loss, "Accuracy": accuracy})
+            # Log the validation loss, accuracy, and hyperparameters to wandb
+            wandb.log({"Validation Loss": avg_loss,"Accuracy": accuracy,})
+
 
             # Save the model if the validation loss decreased
             if avg_loss < min_val_loss:

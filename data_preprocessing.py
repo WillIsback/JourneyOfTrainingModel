@@ -9,7 +9,7 @@ import os
 import json
 from torch.utils.data import Subset
 from torch.nn.utils.rnn import pad_sequence
-
+#nltk.download('punkt')
 # Vocabulary class for mapping between words and numerical indices
 class Vocabulary(object):
     def __init__(self):
@@ -144,15 +144,15 @@ test_size = len(dataset) - train_size - val_size
 train_dataset, val_dataset, test_dataset = random_split(dataset, [train_size, val_size, test_size])
 
 # Assuming `train_dataset` is your original training dataset
-train_subset = Subset(train_dataset, range(100))  # Use the first 100 data points
-train_loader = torch.utils.data.DataLoader(train_subset, batch_size=batch_size, shuffle=True, num_workers=num_workers, collate_fn=collate_fn)
+# train_subset = Subset(train_dataset, range(100))  # Use the first 100 data points
+# train_loader = torch.utils.data.DataLoader(train_subset, batch_size=batch_size, shuffle=True, num_workers=num_workers, collate_fn=collate_fn)
 
 # Create the data loaders
-# train_loader = DataLoader(dataset=train_dataset, 
-#                          batch_size=batch_size, 
-#                          shuffle=True, 
-#                          num_workers=num_workers, 
-#                          collate_fn=collate_fn)
+train_loader = DataLoader(dataset=train_dataset, 
+                         batch_size=batch_size, 
+                         shuffle=True, 
+                         num_workers=num_workers, 
+                         collate_fn=collate_fn)
 
 val_loader = DataLoader(dataset=val_dataset, 
                         batch_size=batch_size, 

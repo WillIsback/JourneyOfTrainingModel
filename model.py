@@ -1,12 +1,13 @@
 # model.py
 import torch
 from torch import nn
-import torchvision.models as models
+from torchvision.models import resnet50
+from torchvision.models.resnet import ResNet50_Weights
 
 class CNN_Encoder(nn.Module):
     def __init__(self, embed_size):
         super(CNN_Encoder, self).__init__()
-        resnet = models.resnet50(pretrained=True)
+        resnet = resnet50(weights=ResNet50_Weights.IMAGENET1K_V1)
         for param in resnet.parameters():
             param.requires_grad_(False)
         
@@ -33,6 +34,20 @@ class RNN_Decoder(nn.Module):
         hiddens, _ = self.lstm(embeddings)
         outputs = self.linear(hiddens)
         return outputs
+    
+    def sample(self, features, states=None, max_len=20):
+        """Generate captions for given image features using greedy search."""
+        sampled_ids = []
+        inputs = features.unsqueeze(1)
+        for i in range(max_len):
+            hiddens, states = self.lstm(inputs, states)          # hiddens: (batch_size, 1, hidden_size)
+            outputs = self.linear(hiddens.squeeze(1))            # outputs:  (batch_size, vocab_size)
+            _, predicted = outputs.max(1)                        # predicted: (batch_size)
+            sampled_ids.append(predicted)
+            inputs = self.embed(predicted)                       # inputs: (batch_size, embed_size)
+            inputs = inputs.unsqueeze(1)                         # inputs: (batch_size, 1, embed_size)
+        sampled_ids = torch.stack(sampled_ids, 1)                # sampled_ids: (batch_size, max_seq_length)
+        return sampled_ids
 
 class CNN_to_RNN(nn.Module):
     def __init__(self, embed_size, hidden_size, vocab_size, num_layers):

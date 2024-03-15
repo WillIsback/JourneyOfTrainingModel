@@ -32,16 +32,16 @@ sweep_config = {
         },
         'learning_rate': {
             'min': 0.0001,
-            'max': 0.01
+            'max': 0.001 # [0.0001, 0.001, 0.01]
         },
         'num_layers': {
             'values': [1, 2, 3]
         },
         'patience': {
-            'values': [2, 4, 6] # [3, 5, 7]
+            'values': [2, 3, 4] # [3, 5, 7]
         },
         'num_epochs': {
-            'values': [1, 2, 3] # 5 10 15
+            'values': [4, 6, 8] # [5, 10, 15]
         }
     }
 }
