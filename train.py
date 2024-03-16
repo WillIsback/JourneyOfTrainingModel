@@ -24,14 +24,19 @@ def get_serializable_config(config):
             pass  # If a TypeError is raised, ignore the item
     return serializable_config
 
-def train(config=None):
-    # Initialize wandb
-    run = wandb.init()
-    config = run.config
+def train(best_hyperparameters=None):
+    # If best_hyperparameters is None, use the default config
+    if best_hyperparameters is None:
+        run = wandb.init()
+        config = run.config
+    else:
+        # Load the hyperparameters from the JSON file
+        with open(best_hyperparameters, 'r') as f:
+            config = json.load(f)
 
 
     # Initialize the model, loss function, and optimizer
-    model = CNN_to_RNN(config.embed_size, config.hidden_size, vocab_size, config.num_layers).to(device)
+    model = CNN_to_RNN(config['embed_size'], config['hidden_size'], vocab_size, config['num_layers']).to(device)
     criterion = nn.CrossEntropyLoss()
     optimizer = torch.optim.Adam(model.parameters(), lr=config.learning_rate)
 
@@ -49,6 +54,10 @@ def train(config=None):
         model.train()
         total_train_loss = 0  # Initialize total_train_loss
         total_train_samples = 0  # Initialize total_train_samples
+        # Calculate total number of steps
+        total_steps = len(train_loader) * config.num_epochs
+        
+        pbar = tqdm(total=total_steps, desc=f'Epoch {epoch + 1}/{config.num_epochs}', dynamic_ncols=True)
         for i, (images, captions, lengths) in enumerate(tqdm(train_loader, desc=f"Training Epoch {epoch+1}")):
             # Move data to the correct device
             images = images.to(device)
@@ -69,11 +78,13 @@ def train(config=None):
             # Update total_train_loss and total_train_samples
             total_train_loss += loss.item() * images.size(0)
             total_train_samples += targets.size(0)
-
+            
+            pbar.update(1)
+            
         # Calculate and log the average training loss
         avg_train_loss = total_train_loss / total_train_samples
         wandb.log({"Training Loss": avg_train_loss,})
-
+        pbar.close()
         # Validation phase
         model.eval()
         with torch.no_grad():

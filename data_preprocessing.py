@@ -112,10 +112,14 @@ def collate_fn(data):
 
 # Load the annotations file
 with open("DataSet/annotations/captions_train2017.json", 'r') as f:
-    annotations = json.load(f)
+    annotations_train = json.load(f)
+    # Load the annotations file
+with open("DataSet/annotations/captions_val2017.json", 'r') as f:
+    annotations_val = json.load(f)
 
 # Extract the captions
-caption_list = [anno['caption'] for anno in annotations['annotations']]
+caption_list_train = [anno['caption'] for anno in annotations_train['annotations']]
+caption_list_val = [anno['caption'] for anno in annotations_val['annotations']]
 
 # Define your variables here
 transform = transforms.Compose([
@@ -130,18 +134,20 @@ num_workers = os.cpu_count()  # Number of workers for data loading
 collate_fn = collate_fn  # Function to batch data
 
 # Create the vocabulary
-vocab = build_vocab(caption_list)
+vocab = build_vocab(caption_list_train)
 
-# Create the dataset
-image_dir = "DataSet/train2017"
-captions_file = "DataSet/annotations/captions_train2017.json"
-dataset = CaptionDataset(image_dir, captions_file, vocab, transform)
+# Create the datasets
+image_dir_train = "DataSet/train2017"
+image_dir_val = "DataSet/val2017"
+captions_file_train = "DataSet/annotations/captions_train2017.json"
+captions_file_val = "DataSet/annotations/captions_val2017.json"
+dataset_train = CaptionDataset(image_dir_train, captions_file_train, vocab, transform)
+dataset_val = CaptionDataset(image_dir_val, captions_file_val, vocab, transform)
 
-# Split the dataset into training, validation, and test sets
-train_size = int(0.7 * len(dataset))
-val_size = int(0.15 * len(dataset))
-test_size = len(dataset) - train_size - val_size
-train_dataset, val_dataset, test_dataset = random_split(dataset, [train_size, val_size, test_size])
+# Split the training dataset into training and test sets
+train_size = int(0.8 * len(dataset_train))
+test_size = len(dataset_train) - train_size
+train_dataset, test_dataset = random_split(dataset_train, [train_size, test_size])
 
 # Assuming `train_dataset` is your original training dataset
 # train_subset = Subset(train_dataset, range(100))  # Use the first 100 data points
@@ -149,12 +155,12 @@ train_dataset, val_dataset, test_dataset = random_split(dataset, [train_size, va
 
 # Create the data loaders
 train_loader = DataLoader(dataset=train_dataset, 
-                         batch_size=batch_size, 
-                         shuffle=True, 
-                         num_workers=num_workers, 
-                         collate_fn=collate_fn)
+                          batch_size=batch_size, 
+                          shuffle=True, 
+                          num_workers=num_workers, 
+                          collate_fn=collate_fn)
 
-val_loader = DataLoader(dataset=val_dataset, 
+val_loader = DataLoader(dataset=dataset_val, 
                         batch_size=batch_size, 
                         shuffle=False, 
                         num_workers=num_workers, 
@@ -162,6 +168,6 @@ val_loader = DataLoader(dataset=val_dataset,
 
 test_loader = DataLoader(dataset=test_dataset, 
                          batch_size=batch_size, 
-                         shuffle=False, 
+                         shuffle=True, 
                          num_workers=num_workers, 
                          collate_fn=collate_fn)
