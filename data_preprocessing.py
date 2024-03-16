@@ -2,7 +2,7 @@
 import nltk
 import torch
 from torchvision import transforms
-from PIL import Image
+
 from torch.utils.data import Dataset, random_split
 from torch.utils.data import DataLoader
 import os
@@ -13,6 +13,8 @@ from torch.nn.utils.rnn import pad_sequence
 # data_preprocessing.py
 from Utils.gpu_utils import get_gpu_memory
 import logging
+from PIL import Image
+import psutil
 
 # Set up logging
 logging.basicConfig(filename='gpu_memory_usage.log', level=logging.INFO)
@@ -61,7 +63,7 @@ def build_vocab(caption_list, threshold=4):
 
 # Function to resize an image
 def resize_image(image, size):
-    return image.resize(size, Image.ANTIALIAS)
+    return image.resize((size), Image.LANCZOS)
 
 # Function to preprocess an image
 def preprocess_image(image_path):
@@ -138,7 +140,7 @@ transform = transforms.Compose([
     transforms.ToTensor(),
     transforms.Normalize((0.485, 0.456, 0.406), 
                          (0.229, 0.224, 0.225))])
-batch_size = 128  # Batch size
+batch_size = 64  # Batch size
 num_workers = os.cpu_count()  # Number of workers for data loading
 collate_fn = collate_fn  # Function to batch data
 
@@ -162,41 +164,37 @@ train_dataset, test_dataset = random_split(dataset_train, [train_size, test_size
 # Get the size of the validation dataset
 val_size = len(dataset_val)
 # Define the size of your subset
-if(val_size < train_size):
-    subset_size = val_size
-else:  
-    subset_size = train_size / 1000
+subset_indices = [val_size]  # Define the subset indices
 
-# Create a subset of your dataset
-subset_indices = torch.randperm(len(train_dataset))[:subset_size]
-subset_dataset = Subset(train_dataset, subset_indices)
-
-# Create a DataLoader for your subset
-subset_loader = DataLoader(subset_dataset, batch_size=batch_size, shuffle=True, num_workers=num_workers, collate_fn=collate_fn)
+subset_dataset = Subset(train_dataset, subset_indices)  # Define the subset dataset
+subset_loader = DataLoader(subset_dataset, batch_size=batch_size, shuffle=True, num_workers=num_workers if num_workers is not None else 0, collate_fn=collate_fn)
 
 # Create the data loaders
 train_loader = DataLoader(dataset=train_dataset, 
                           batch_size=batch_size, 
                           shuffle=True, 
-                          num_workers=num_workers, 
-                          collate_fn=collate_fn)
+                          num_workers=num_workers if num_workers is not None else 0, 
+                          collate_fn=collate_fn,
+                          pin_memory=True)
 
 val_loader = DataLoader(dataset=dataset_val, 
                         batch_size=batch_size, 
                         shuffle=False, 
-                        num_workers=num_workers, 
-                        collate_fn=collate_fn)
+                        num_workers=num_workers if num_workers is not None else 0, 
+                        collate_fn=collate_fn,
+                        pin_memory=True)
 
 test_loader = DataLoader(dataset=test_dataset, 
                          batch_size=batch_size, 
                          shuffle=True, 
-                         num_workers=num_workers, 
-                         collate_fn=collate_fn)
-
-
-# Check if GPU is available
-device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+                         num_workers=num_workers if num_workers is not None else 0, 
+                         collate_fn=collate_fn,
+                         pin_memory=True)
 
 def Log_gpu_memory_usage(epoch):
     memory_used = get_gpu_memory()
-    logging.info(f'Epoch {epoch}, Batch size {batch_size}: Memory used: {memory_used} MB')
+    logging.info(f'Epoch {epoch}, Batch size: {batch_size}, Memory used: {memory_used} MB')
+    
+def log_cpu_usage(epoch):
+    cpu_usage = psutil.cpu_percent()
+    logging.info(f'Epoch {epoch}, Batch size: {batch_size}, CPU usage: {cpu_usage}%')

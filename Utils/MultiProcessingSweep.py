@@ -1,5 +1,4 @@
 from train import train # Import the train function from train.py
-from wandb.sdk import wandb_config
 import wandb
 import json
 import Utils.Utils as Utils
@@ -8,18 +7,18 @@ from tqdm import tqdm
 
 def run_sweep(sweep_id, count):
     # Initialize the progress bar
-    pbar = tqdm(total=count, desc='Overall Progress', dynamic_ncols=False, ncols=100)
+    pbar_Fintune_HyperParameter = tqdm(total=count, desc='Overall Progress', dynamic_ncols=False, ncols=100)
     def train_with_progress(*args, **kwargs):
         # Run the training function and measure the time
         train(*args, **kwargs)
         # Update the progress bar
-        pbar.update(1)
+        pbar_Fintune_HyperParameter.update(1)
 
     wandb.agent(sweep_id, function=train_with_progress, count=count)
     GetBestSweepRun(sweep_id)
 
     # Close the progress bar
-    pbar.close()
+    pbar_Fintune_HyperParameter.close()
     
 def RunMultiProcessingSweep(sweep_config, count=1):
     sweep_id = wandb.sweep(sweep_config, project="MYFIRSTAI", entity="william-derue")
