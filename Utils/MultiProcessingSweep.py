@@ -8,7 +8,7 @@ from tqdm import tqdm
 
 def run_sweep(sweep_id, count):
     # Initialize the progress bar
-    pbar = tqdm(total=count, desc='Overall Progress', dynamic_ncols=False, ncols=50)
+    pbar = tqdm(total=count, desc='Overall Progress', dynamic_ncols=False, ncols=100)
     def train_with_progress(*args, **kwargs):
         # Run the training function and measure the time
         train(*args, **kwargs)

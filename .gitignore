@@ -5,3 +5,4 @@ config.json
 wandb
 test.py
 __pycache__
+gpu_memory_usage.log

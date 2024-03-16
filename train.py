@@ -49,7 +49,7 @@ def train(config=None):
     
     # Calculate total number of steps
     total_steps = (len(train_loader)+len(val_loader)) * config.num_epochs
-    pbar = tqdm(total=total_steps, desc=f'Training',  dynamic_ncols=False, ncols=50)
+    pbar = tqdm(total=total_steps, desc=f'Training',  dynamic_ncols=False, ncols=100)
     
     # Training loop
     for epoch in range(config.num_epochs):
@@ -59,7 +59,7 @@ def train(config=None):
         # Calculate total number of steps
         total_steps = (len(train_loader)+len(val_loader)) * config.num_epochs
         Log_gpu_memory_usage(epoch)
-        for i, (images, captions, lengths) in enumerate(tqdm(train_loader, desc=f"Training Epoch {epoch+1}", dynamic_ncols=False, ncols=50)):
+        for i, (images, captions, lengths) in enumerate(tqdm(train_loader, desc=f"Training Epoch {epoch+1}", dynamic_ncols=False, ncols=100)):
             # Move data to the correct device
             images = images.to(device)
             captions = captions.to(device)
@@ -100,7 +100,7 @@ def train(config=None):
             total_loss = 0  # Initialize total_loss
             total_samples = 0  # Initialize total_samples
             total_correct = 0  # Initialize total_correct
-            for i, (images, captions, lengths) in enumerate(tqdm(val_loader, desc=f"Validation Epoch {epoch+1}", dynamic_ncols=False, ncols=50)):
+            for i, (images, captions, lengths) in enumerate(tqdm(val_loader, desc=f"Validation Epoch {epoch+1}", dynamic_ncols=False, ncols=100)):
                 images = images.to(device)
                 captions = captions.to(device)
                 targets = pack_padded_sequence(captions, lengths, batch_first=True)[0]
