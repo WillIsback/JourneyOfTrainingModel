@@ -1,1 +1,1 @@
-{"patience": 3, "embed_size": 1024, "num_epochs": 10, "num_layers": 2, "hidden_size": 512, "learning_rate": 6.208977330653873e-05}
+{"patience": 5, "embed_size": 256, "num_epochs": 15, "num_layers": 2, "hidden_size": 1024, "learning_rate": 7.828769875504858e-05}

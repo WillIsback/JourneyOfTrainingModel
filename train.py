@@ -53,6 +53,8 @@ def train(config=None):
     
     # Training loop
     for epoch in range(config.num_epochs):
+        total_steps_wandb_training = 0  # Initialize total_steps at the start of training
+        total_steps_wandb_validation = 0  # Initialize total_steps at the start of validation
         model.train()
         total_train_loss = 0  # Initialize total_train_loss
         total_train_samples = 0  # Initialize total_train_samples
@@ -84,13 +86,13 @@ def train(config=None):
             batch_loss = loss.item()
             # Log the batch loss to wandb
             wandb.log({"Batch Training Loss": batch_loss})
-            
+            total_steps_wandb_training += 1
             pbar.update(1)
             pbar.set_description(f'Epoch {epoch + 1}/{config.num_epochs}')
             
         # Calculate and log the average training loss
         avg_train_loss = total_train_loss / total_train_samples
-        wandb.log({"Epoch Training Loss": avg_train_loss,}, step=epoch)
+        wandb.log({"Average Training Loss": avg_train_loss,})
                
         
         
@@ -119,6 +121,7 @@ def train(config=None):
                 batch_loss = loss.item()
                 # Log the batch loss to wandb
                 wandb.log({"Batch Validation Loss": batch_loss})
+                total_steps_wandb_validation += 1
                 pbar.update(1)
                 pbar.set_description(f'Epoch {epoch + 1}/{config.num_epochs}')
                 
@@ -127,7 +130,7 @@ def train(config=None):
             print(f"Validation Loss: {avg_loss}, Accuracy: {accuracy}")
 
             # Log the validation loss, accuracy, and hyperparameters to wandb
-            wandb.log({"Epoch Validation Loss": avg_loss,"Accuracy": accuracy,}, step=epoch)
+            wandb.log({"Average Validation Loss": avg_loss,"Accuracy": accuracy,})
             
             if(is_Hyperparameter_tuning == False):
                 # Log a batch of images and their corresponding captions to wandb

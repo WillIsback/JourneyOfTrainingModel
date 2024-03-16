@@ -6,3 +6,4 @@ wandb
 test.py
 __pycache__
 gpu_memory_usage.log
+Utils/__pycache__

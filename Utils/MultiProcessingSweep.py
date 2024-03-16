@@ -32,7 +32,7 @@ def GetBestSweepRun(sweep_id):
     # sweep id
     sweep = api.sweep(sweep_id)
     # Get the best run of the sweep
-    best_run = sorted(sweep.runs, key=lambda run: run.summary.get('Epoch Validation Loss', 0))[0]
+    best_run = sorted(sweep.runs, key=lambda run: run.summary.get('Average Validation Loss', 0))[0]
     # Write the best run's hyperparameters to a JSON file
     with open('configs/best_config.json', 'w') as f:
         json.dump(best_run.config, f)
