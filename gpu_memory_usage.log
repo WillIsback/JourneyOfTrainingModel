@@ -73,3 +73,5 @@ INFO:root:Epoch 3, Batch size 90: Memory used: [6585] MB
 INFO:root:Epoch 4, Batch size 90: Memory used: [6615] MB
 INFO:root:Epoch 0, Batch size 90: Memory used: [6582] MB
 INFO:root:Epoch 1, Batch size 90: Memory used: [6061] MB
+INFO:wandb.agents.pyagent:Starting sweep agent: entity=None, project=None, count=5
+INFO:root:Epoch 0, Batch size 128: Memory used: [8648] MB

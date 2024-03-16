@@ -4,3 +4,4 @@ model.pt
 config.json
 wandb
 test.py
+__pycache__
