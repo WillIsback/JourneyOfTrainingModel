@@ -9,7 +9,16 @@ import os
 import json
 from torch.utils.data import Subset
 from torch.nn.utils.rnn import pad_sequence
-#nltk.download('punkt')
+
+# data_preprocessing.py
+from Utils.gpu_utils import get_gpu_memory
+import logging
+
+# Set up logging
+logging.basicConfig(filename='gpu_memory_usage.log', level=logging.INFO)
+
+#nltk.download('punkt') // if not already downloaded
+
 # Vocabulary class for mapping between words and numerical indices
 class Vocabulary(object):
     def __init__(self):
@@ -129,7 +138,7 @@ transform = transforms.Compose([
     transforms.ToTensor(),
     transforms.Normalize((0.485, 0.456, 0.406), 
                          (0.229, 0.224, 0.225))])
-batch_size = 32  # Batch size
+batch_size = 128  # Batch size
 num_workers = os.cpu_count()  # Number of workers for data loading
 collate_fn = collate_fn  # Function to batch data
 
@@ -149,9 +158,21 @@ train_size = int(0.8 * len(dataset_train))
 test_size = len(dataset_train) - train_size
 train_dataset, test_dataset = random_split(dataset_train, [train_size, test_size])
 
-# Assuming `train_dataset` is your original training dataset
-# train_subset = Subset(train_dataset, range(100))  # Use the first 100 data points
-# train_loader = torch.utils.data.DataLoader(train_subset, batch_size=batch_size, shuffle=True, num_workers=num_workers, collate_fn=collate_fn)
+# Definition a subset of the training dataset for hyperparameter tuning
+# Get the size of the validation dataset
+val_size = len(dataset_val)
+# Define the size of your subset
+if(val_size < train_size):
+    subset_size = val_size
+else:  
+    subset_size = train_size / 1000
+
+# Create a subset of your dataset
+subset_indices = torch.randperm(len(train_dataset))[:subset_size]
+subset_dataset = Subset(train_dataset, subset_indices)
+
+# Create a DataLoader for your subset
+subset_loader = DataLoader(subset_dataset, batch_size=batch_size, shuffle=True, num_workers=num_workers, collate_fn=collate_fn)
 
 # Create the data loaders
 train_loader = DataLoader(dataset=train_dataset, 
@@ -171,3 +192,11 @@ test_loader = DataLoader(dataset=test_dataset,
                          shuffle=True, 
                          num_workers=num_workers, 
                          collate_fn=collate_fn)
+
+
+# Check if GPU is available
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+
+def Log_gpu_memory_usage(epoch):
+    memory_used = get_gpu_memory()
+    logging.info(f'Epoch {epoch}, Batch size {batch_size}: Memory used: {memory_used} MB')

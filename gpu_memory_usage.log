@@ -1,0 +1,75 @@
+INFO:wandb.agents.pyagent:Starting sweep agent: entity=None, project=None, count=None
+INFO:wandb.agents.pyagent:Starting sweep agent: entity=None, project=None, count=None
+INFO:root:Epoch 0, Batch size 64: Memory used: [9028] MB
+INFO:root:Epoch 1, Batch size 64: Memory used: [7761] MB
+INFO:root:Epoch 2, Batch size 64: Memory used: [7701] MB
+INFO:root:Epoch 3, Batch size 64: Memory used: [7676] MB
+INFO:root:Epoch 4, Batch size 64: Memory used: [7685] MB
+INFO:root:Epoch 5, Batch size 64: Memory used: [7733] MB
+INFO:root:Epoch 0, Batch size 64: Memory used: [7717] MB
+INFO:root:Epoch 1, Batch size 64: Memory used: [7310] MB
+INFO:root:Epoch 2, Batch size 64: Memory used: [7331] MB
+INFO:root:Epoch 3, Batch size 64: Memory used: [7359] MB
+INFO:root:Epoch 4, Batch size 64: Memory used: [7353] MB
+INFO:root:Epoch 5, Batch size 64: Memory used: [7363] MB
+INFO:root:Epoch 0, Batch size 64: Memory used: [7165] MB
+INFO:root:Epoch 1, Batch size 64: Memory used: [4549] MB
+INFO:root:Epoch 2, Batch size 64: Memory used: [4531] MB
+INFO:root:Epoch 3, Batch size 64: Memory used: [4516] MB
+INFO:root:Epoch 0, Batch size 64: Memory used: [4446] MB
+INFO:root:Epoch 1, Batch size 64: Memory used: [4525] MB
+INFO:root:Epoch 2, Batch size 64: Memory used: [4510] MB
+INFO:root:Epoch 3, Batch size 64: Memory used: [4503] MB
+INFO:root:Epoch 4, Batch size 64: Memory used: [4522] MB
+INFO:root:Epoch 5, Batch size 64: Memory used: [4514] MB
+INFO:wandb.agents.pyagent:Starting sweep agent: entity=None, project=None, count=None
+INFO:wandb.agents.pyagent:Starting sweep agent: entity=None, project=None, count=None
+INFO:wandb.agents.pyagent:Starting sweep agent: entity=None, project=None, count=None
+INFO:wandb.agents.pyagent:Starting sweep agent: entity=None, project=None, count=None
+INFO:wandb.agents.pyagent:Starting sweep agent: entity=None, project=None, count=None
+INFO:root:Epoch 0, Batch size 64: Memory used: [8421] MB
+INFO:wandb.agents.pyagent:Starting sweep agent: entity=None, project=None, count=10
+INFO:root:Epoch 0, Batch size 64: Memory used: [8577] MB
+INFO:wandb.agents.pyagent:Starting sweep agent: entity=None, project=None, count=10
+INFO:root:Epoch 0, Batch size 64: Memory used: [8377] MB
+INFO:root:Epoch 1, Batch size 64: Memory used: [4338] MB
+INFO:root:Epoch 2, Batch size 64: Memory used: [4299] MB
+INFO:root:Epoch 3, Batch size 64: Memory used: [4316] MB
+INFO:root:Epoch 4, Batch size 64: Memory used: [4330] MB
+INFO:root:Epoch 5, Batch size 64: Memory used: [4300] MB
+INFO:root:Epoch 0, Batch size 64: Memory used: [4293] MB
+INFO:wandb.agents.pyagent:Starting sweep agent: entity=None, project=None, count=10
+INFO:root:Epoch 0, Batch size 64: Memory used: [8769] MB
+INFO:root:Epoch 1, Batch size 64: Memory used: [7579] MB
+INFO:root:Epoch 2, Batch size 64: Memory used: [7588] MB
+INFO:root:Epoch 3, Batch size 64: Memory used: [7590] MB
+INFO:root:Epoch 0, Batch size 64: Memory used: [7562] MB
+INFO:root:Epoch 1, Batch size 64: Memory used: [7202] MB
+INFO:root:Epoch 2, Batch size 64: Memory used: [7184] MB
+INFO:root:Epoch 3, Batch size 64: Memory used: [7183] MB
+INFO:root:Epoch 4, Batch size 64: Memory used: [7200] MB
+INFO:root:Epoch 5, Batch size 64: Memory used: [7189] MB
+INFO:root:Epoch 0, Batch size 64: Memory used: [6833] MB
+INFO:wandb.agents.pyagent:Starting sweep agent: entity=None, project=None, count=10
+INFO:root:Epoch 0, Batch size 90: Memory used: [8687] MB
+INFO:root:Epoch 1, Batch size 90: Memory used: [6672] MB
+INFO:root:Epoch 2, Batch size 90: Memory used: [6667] MB
+INFO:root:Epoch 3, Batch size 90: Memory used: [6650] MB
+INFO:root:Epoch 4, Batch size 90: Memory used: [6642] MB
+INFO:root:Epoch 5, Batch size 90: Memory used: [6650] MB
+INFO:root:Epoch 6, Batch size 90: Memory used: [6663] MB
+INFO:root:Epoch 7, Batch size 90: Memory used: [6615] MB
+INFO:root:Epoch 8, Batch size 90: Memory used: [6658] MB
+INFO:root:Epoch 9, Batch size 90: Memory used: [6655] MB
+INFO:root:Epoch 10, Batch size 90: Memory used: [6617] MB
+INFO:root:Epoch 11, Batch size 90: Memory used: [6625] MB
+INFO:root:Epoch 12, Batch size 90: Memory used: [6636] MB
+INFO:root:Epoch 13, Batch size 90: Memory used: [6629] MB
+INFO:root:Epoch 14, Batch size 90: Memory used: [6643] MB
+INFO:root:Epoch 0, Batch size 90: Memory used: [6631] MB
+INFO:root:Epoch 1, Batch size 90: Memory used: [6650] MB
+INFO:root:Epoch 2, Batch size 90: Memory used: [6604] MB
+INFO:root:Epoch 3, Batch size 90: Memory used: [6585] MB
+INFO:root:Epoch 4, Batch size 90: Memory used: [6615] MB
+INFO:root:Epoch 0, Batch size 90: Memory used: [6582] MB
+INFO:root:Epoch 1, Batch size 90: Memory used: [6061] MB
