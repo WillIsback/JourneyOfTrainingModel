@@ -1,11 +1,11 @@
 # data_preprocessing.py
+from tracemalloc import start
 import nltk
 import torch
 from torchvision import transforms
 import os
 import json
 from Utils.Utils import get_absolute_path
-import logging
 from PIL import Image
 from webdataset import WebDataset
 from tqdm import tqdm
@@ -116,46 +116,89 @@ def load_and_preprocess_data():
 
     # Create the validation datasets
     image_dir_val = get_absolute_path("DataSet/val2017")
-
+    
+    # Define the batch size
+    IO_batch_size = 1000
+    
+    # Check if the metadata file already exists
+    if os.path.exists("metadata.json"):
+        # The metadata file already exists, so load the number of processed elements
+        with open("metadata.json", "r") as file:
+            metadata = json.load(file)
+            num_elements_train = metadata.get("num_elements_train", 0)
+            num_elements_val = metadata.get("num_elements_val", 0)
+    else:
+        # The metadata file does not exist, so start from scratch
+        num_elements_train = 0
+        num_elements_val = 0
 
     # Check if the tar files already exist
-    if not os.path.exists("training.tar") or not os.path.exists("validation.tar"):
-        # Create a tar file to store the preprocessed training data
-        with open("training.tar", "wb") as outfile:
-            for idx in tqdm(range(len(caption_list_train)), desc="Processing training data",dynamic_ncols=False, ncols=100):
-                caption = caption_list_train[idx]
-                img_id = annotations_train['annotations'][idx]['image_id']
-                image_path = os.path.join(image_dir_train, f'{img_id:012d}.jpg')
-                image = Image.open(image_path).convert('RGB')
-                image = transform(image)
-                torch.save(image, outfile)
+    if os.path.exists("training.tar"):     
+        if num_elements_train == len(caption_list_train):
+            print("Job is complete")
+        else:
+            print("Job is not complete, resuming...")
+            # Resume the job from the last saved index
+            start_index_train = num_elements_train
+            
+    # Check if the tar files already exist
+    if os.path.exists("validation.tar"):      
+        if num_elements_val == len(caption_list_val):
+            print("Job is complete")
+        else:
+            print("Job is not complete, resuming...")
+            # Resume the job from the last saved index
+            start_index_val = num_elements_val
 
-                tokens = nltk.tokenize.word_tokenize(str(caption).lower())
-                caption = []
-                caption.append(vocab('<start>'))
-                caption.extend([vocab(token) for token in tokens])
-                caption.append(vocab('<end>'))
-                target = torch.LongTensor(caption)
-                torch.save(target, outfile)
+            
+    # Create a tar file to store the preprocessed training data
+    with open("training.tar", "wb") as outfile:
+        for idx in tqdm(range(start_index_train, len(caption_list_train)), desc="Processing training data", dynamic_ncols=False, ncols=100):
+            caption = caption_list_train[idx]
+            img_id = annotations_train['annotations'][idx]['image_id']
+            image_path = os.path.join(image_dir_train, f'{img_id:012d}.jpg')
+            image = Image.open(image_path).convert('RGB')
+            image = transform(image)
+            torch.save(image, outfile)
 
-        # Create a tar file to store the preprocessed validation data
-        with open("validation.tar", "wb") as outfile:
-            for idx in tqdm(range(len(caption_list_val)), desc="Processing validation data",dynamic_ncols=False, ncols=100):
-                caption = caption_list_val[idx]
-                img_id = annotations_val['annotations'][idx]['image_id']
-                image_path = os.path.join(image_dir_val, f'{img_id:012d}.jpg')
-                image = Image.open(image_path).convert('RGB')
-                image = transform(image)
-                torch.save(image, outfile)
+            tokens = nltk.tokenize.word_tokenize(str(caption).lower())
+            caption = []
+            caption.append(vocab('<start>'))
+            caption.extend([vocab(token) for token in tokens])
+            caption.append(vocab('<end>'))
+            target = torch.LongTensor(caption)
+            torch.save(target, outfile)
+            # Update the number of processed elements
+            num_elements_train = idx + 1
+            # Save the number of processed elements in the metadata file
+            if num_elements_train % IO_batch_size == 0:
+                with open("metadata.json", "w") as file:
+                    json.dump({"num_elements_train": num_elements_train, "num_elements_val": num_elements_val}, file)
 
-                tokens = nltk.tokenize.word_tokenize(str(caption).lower())
-                caption = []
-                caption.append(vocab('<start>'))
-                caption.extend([vocab(token) for token in tokens])
-                caption.append(vocab('<end>'))
-                target = torch.LongTensor(caption)
-                torch.save(target, outfile)
+    # Create a tar file to store the preprocessed validation data
+    with open("validation.tar", "wb") as outfile:
+        for idx in tqdm(range(start_index_val, len(caption_list_val)), desc="Processing validation data", dynamic_ncols=False, ncols=100):
+            caption = caption_list_val[idx]
+            img_id = annotations_val['annotations'][idx]['image_id']
+            image_path = os.path.join(image_dir_val, f'{img_id:012d}.jpg')
+            image = Image.open(image_path).convert('RGB')
+            image = transform(image)
+            torch.save(image, outfile)
 
+            tokens = nltk.tokenize.word_tokenize(str(caption).lower())
+            caption = []
+            caption.append(vocab('<start>'))
+            caption.extend([vocab(token) for token in tokens])
+            caption.append(vocab('<end>'))
+            target = torch.LongTensor(caption)
+            torch.save(target, outfile)
+            # Update the number of processed elements
+            num_elements_val = idx + 1
+            # Save the number of processed elements in the metadata file
+            if num_elements_val % IO_batch_size == 0:
+                with open("metadata.json", "w") as file:
+                    json.dump({"num_elements_train": num_elements_train, "num_elements_val": num_elements_val}, file) 
+                                   
     # Create a WebDataset for the training data
     training_dataset = WebDataset("training.tar").decode("pil").to_tuple("jpg;png", "json")
 
