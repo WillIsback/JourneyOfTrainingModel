@@ -3,21 +3,37 @@ import torch
 import torch.nn as nn
 from torch.nn.utils.rnn import pack_padded_sequence
 from model import CNN_to_RNN
-from data_preprocessing import train_loader, val_loader, vocab, subset_loader, Log_gpu_memory_usage, log_cpu_usage
+from data_preprocessing import load_and_preprocess_data
+from torch.utils.data import DataLoader
 import wandb
-import json
 from tqdm import tqdm
 import Utils.Utils as Utils
 from torch.cuda.amp import autocast, GradScaler 
-
-# Check if GPU is available
-device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-torch.cuda.empty_cache()
-# In your model or training script
-vocab_size = len(vocab)
+import os
+import logging
 
 def train(config=None):
+    # Set up logging
+    logging.basicConfig(filename='gpu_cpu_memory_usage.log', level=logging.INFO)
+    # Check if GPU is available
+    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+    torch.cuda.empty_cache()
     scaler = GradScaler()
+    num_workers = int(os.cpu_count() or 1)
+    print(f"Number of workers: {num_workers}")
+    # Load the training and validation datasets and the vocabulary
+    training_dataset, validation_dataset, vocab = load_and_preprocess_data()
+
+    vocab_size = len(vocab)
+
+    # Create data loaders for the training and validation datasets
+    train_loader_dataset = DataLoader(training_dataset[0], batch_size=32, shuffle=True, num_workers=num_workers, pin_memory=True)
+    val_loader_dataset = DataLoader(validation_dataset[0], batch_size=32, shuffle=False, num_workers=num_workers, pin_memory=True)
+
+    # Check if the data loaders are correctly set up
+    Utils.CheckingDataSetSetup(train_loader_dataset, val_loader_dataset)
+    
+    
     # If config is an instance of Config, print the config and initialize wandb
     if (config):
         project="MYFIRSTAI"
@@ -30,7 +46,6 @@ def train(config=None):
         else:
             print("wandb.init() returned None")
         is_Hyperparameter_tuning = False
-        train_loader_dataset = train_loader
         
     # If config is None, use the default config
     elif config is None:
@@ -39,7 +54,6 @@ def train(config=None):
             config = run.config
         else:
             print("wandb.init() returned None")
-        train_loader_dataset = subset_loader
         is_Hyperparameter_tuning = True
         
     # Initialize the model, loss function, and optimizer
@@ -61,20 +75,25 @@ def train(config=None):
     if config is not None:
         
         # Calculate total number of steps
-        total_steps = float((len(train_loader_dataset) + len(val_loader)) * config.num_epochs)
+        total_steps = float((len(train_loader_dataset) + len(val_loader_dataset)) * config.num_epochs)
         pbar = tqdm(total=total_steps, desc=f'Training',  dynamic_ncols=False, ncols=100)
+
+        tuning_steps = 500  # Number of steps for hyperparameter tuning
     
-        # Training loop
+        ### Training loop --------------------------------------------------------------------------
         for epoch in range(int(config.num_epochs)):
             model.train()
             total_train_loss = 0  # Initialize total_train_loss
             total_train_samples = 0  # Initialize total_train_samples
             # Calculate total number of steps
-            total_steps = (len(train_loader_dataset)+len(val_loader)) * config.num_epochs   
-            Log_gpu_memory_usage(epoch)
-            log_cpu_usage(epoch)
+            total_steps = (len(train_loader_dataset)+len(val_loader_dataset)) * config.num_epochs   
+            Utils.Log_gpu_memory_usage(epoch)
+            Utils.log_cpu_usage(epoch)
             
             for i, (images, captions, lengths) in enumerate(tqdm(train_loader_dataset, desc=f"Training Epoch {epoch+1}", dynamic_ncols=False, ncols=100)):
+                # If hyperparameter tuning, break the loop after tuning_steps
+                if is_Hyperparameter_tuning and i >= tuning_steps:
+                    break
                 # Move data to the correct device
                 images = images.to(device)
                 captions = captions.to(device)
@@ -103,8 +122,8 @@ def train(config=None):
                 wandb.log({"Training Batch Loss": batch_loss})
                 
                 pbar.update(1)
-                pbar.set_description(f'Epoch {epoch + 1}/{config.num_epochs}')
-                
+                pbar.set_description(f'Epoch {epoch + 1}/{config.num_epochs}, Step {i+1}/{len(train_loader_dataset)}')
+     
             # Calculate and log the average training loss
             avg_train_loss = total_train_loss / total_train_samples
             wandb.log({"Training Loss": avg_train_loss,})
@@ -117,7 +136,7 @@ def train(config=None):
                 total_loss = 0  # Initialize total_loss
                 total_samples = 0  # Initialize total_samples
                 total_correct = 0  # Initialize total_correct
-                for i, (images, captions, lengths) in enumerate(tqdm(val_loader, desc=f"Validation Epoch {epoch+1}", dynamic_ncols=False, ncols=100)):
+                for i, (images, captions, lengths) in enumerate(tqdm(val_loader_dataset, desc=f"Validation Epoch {epoch+1}", dynamic_ncols=False, ncols=100)):
                     images = images.to(device)
                     captions = captions.to(device)
                     targets = pack_padded_sequence(captions, lengths, batch_first=True)[0]
@@ -136,12 +155,13 @@ def train(config=None):
                     batch_loss = loss.item()
                     # Log the step to wandb
                     wandb.log({"Validation batch Loss": batch_loss})
-                    
                     pbar.update(1)              
+                    pbar.set_description(f'Epoch {epoch + 1}/{config.num_epochs}, Validation Step {i+1}/{len(val_loader_dataset)}')
+                     
                 avg_loss = total_loss / total_samples
                 accuracy = total_correct / total_samples
                 print(f"Validation Loss: {avg_loss}, Accuracy: {accuracy}")
-                pbar.update(1)
+   
                 # Log the validation loss, accuracy, and hyperparameters to wandb
                 wandb.log({"Validation Loss": avg_loss,"Accuracy": accuracy,})
                 
@@ -149,13 +169,13 @@ def train(config=None):
                     # Log a batch of images and their corresponding captions to wandb
                     if (epoch + 1) % 10 == 2:  # Log images on the 2nd, 12th, 22nd epoch, etc.
                         # Get a batch of images and captions
-                        images, captions, lengths = next(iter(val_loader))
+                        images, captions, lengths = next(iter(val_loader_dataset))
                         images = images[:3].to(device)  # Select only the first 3 images
                         captions = captions[:3].to(device)  # Select only the first 3 captions
                         
                         # Generate captions with the model
                         features = model.encoder(images)
-                        sampled_ids = model.decoder.sample(features)
+                        sampled_ids = model.decoder.sample(features, top_k=5)
                         sampled_ids = sampled_ids.cpu().numpy()
                     
                         # Convert the generated captions to strings

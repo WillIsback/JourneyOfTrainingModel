@@ -48,7 +48,7 @@ The model consists of two main parts:
 
 ## Training
 
-The model is trained on the COCO dataset. During training, the weights of the ResNet50 model are not updated. Only the weights of the RNN Decoder are updated.
+The model is trained on the [COCO](https://cocodataset.org/#download) dataset. During training, the weights of the ResNet50 model are not updated. Only the weights of the RNN Decoder are updated.
 
 The state dictionary of the entire model (including both the CNN Encoder and RNN Decoder) is saved whenever the validation loss decreases. This state dictionary can be loaded later to use the trained model for inference.
 

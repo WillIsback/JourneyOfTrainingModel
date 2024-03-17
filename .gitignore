@@ -7,3 +7,6 @@ test.py
 __pycache__
 gpu_memory_usage.log
 Utils/__pycache__
+
+training.tar
+validation.tar

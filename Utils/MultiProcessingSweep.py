@@ -33,6 +33,6 @@ def GetBestSweepRun(sweep_id):
     # Get the best run of the sweep
     best_run = sorted(sweep.runs, key=lambda run: run.summary.get('Validation Loss', 0))[0]
     # Write the best run's hyperparameters to a JSON file
-    with open('configs/best_config.json', 'w') as f:
+    with open(Utils.get_absolute_path('configs/best_config.json'), 'w') as f:
         json.dump(best_run.config, f)
         

@@ -1,34 +1,41 @@
-# evaluate.py
+from torchvision import transforms
+from torchvision.datasets import ImageFolder
+from torch.utils.data import DataLoader
 import torch
+import os
 
-def evaluate(model, data_loader, criterion, device):
+def evaluate(model, image_folder, device):
+    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+    torch.cuda.empty_cache()
+    num_workers = int(os.cpu_count() or 1)
+
+    # Define the image transformations
+    transform = transforms.Compose([
+        transforms.Resize((224, 224)),  # Resize images to 224x224
+        transforms.ToTensor(),  # Convert images to PyTorch tensors
+        transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])  # Normalize images
+    ])
+
+    # Load the images from the image folder
+    image_dataset = ImageFolder(image_folder, transform=transform)
+
+    # Create a DataLoader for the image dataset
+    test_loader = DataLoader(image_dataset, batch_size=32, shuffle=False, num_workers=num_workers, pin_memory=True)
+
     model.eval()  # Set the model to evaluation mode
-    total_loss = 0
-    total_accuracy = 0
-    total_samples = 0
+    generated_captions = []
 
     with torch.no_grad():  # Disable gradient calculation
-        for images, captions, lengths in data_loader:
-            # Move the images and captions to the current device
+        for images, _ in test_loader:  # Ignore image labels
+            # Move the images to the current device
             images = images.to(device)
-            captions = captions.to(device)
 
             # Forward pass
-            outputs = model(images, captions, lengths)
+            outputs = model(images)
 
-            # Calculate the loss
-            loss = criterion(outputs, captions)
+            # Convert the outputs to captions
+            captions = outputs.argmax(dim=2)  # Assuming the output shape is [batch_size, seq_len, vocab_size]
+            generated_captions.extend(captions.tolist())
 
-            # Calculate the accuracy
-            accuracy = (outputs.argmax(dim=1) == captions).float().mean()
+    return generated_captions
 
-            # Update the total loss and accuracy
-            total_loss += loss.item() * images.size(0)
-            total_accuracy += accuracy.item() * images.size(0)
-            total_samples += images.size(0)
-
-    # Calculate the average loss and accuracy
-    avg_loss = total_loss / total_samples
-    avg_accuracy = total_accuracy / total_samples
-
-    return avg_loss, avg_accuracy
