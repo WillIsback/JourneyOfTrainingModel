@@ -140,8 +140,8 @@ transform = transforms.Compose([
     transforms.ToTensor(),
     transforms.Normalize((0.485, 0.456, 0.406), 
                          (0.229, 0.224, 0.225))])
-batch_size = 64  # Batch size
-num_workers = os.cpu_count()  # Number of workers for data loading
+batch_size = 32  # Batch size
+num_workers = os.cpu_count() or 0 # Number of workers for data loading
 collate_fn = collate_fn  # Function to batch data
 
 # Create the vocabulary
@@ -174,22 +174,22 @@ train_loader = DataLoader(dataset=train_dataset,
                           batch_size=batch_size, 
                           shuffle=True, 
                           num_workers=num_workers if num_workers is not None else 0, 
-                          collate_fn=collate_fn,
-                          pin_memory=True)
+                          collate_fn=collate_fn
+                          )
 
 val_loader = DataLoader(dataset=dataset_val, 
                         batch_size=batch_size, 
                         shuffle=False, 
                         num_workers=num_workers if num_workers is not None else 0, 
-                        collate_fn=collate_fn,
-                        pin_memory=True)
+                        collate_fn=collate_fn
+                        )
 
 test_loader = DataLoader(dataset=test_dataset, 
                          batch_size=batch_size, 
                          shuffle=True, 
                          num_workers=num_workers if num_workers is not None else 0, 
-                         collate_fn=collate_fn,
-                         pin_memory=True)
+                         collate_fn=collate_fn
+                         )
 
 def Log_gpu_memory_usage(epoch):
     memory_used = get_gpu_memory()

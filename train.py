@@ -12,7 +12,7 @@ from torch.cuda.amp import autocast, GradScaler
 
 # Check if GPU is available
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-
+torch.cuda.empty_cache()
 # In your model or training script
 vocab_size = len(vocab)
 
@@ -70,19 +70,11 @@ def train(config=None):
             total_train_loss = 0  # Initialize total_train_loss
             total_train_samples = 0  # Initialize total_train_samples
             # Calculate total number of steps
-            total_steps = (len(train_loader_dataset)+len(val_loader)) * config.num_epochs
-            
-            data_iter = iter(train_loader_dataset)
-            next_batch = next(data_iter) # start loading the first batch
-            next_batch = [ _.cuda(non_blocking=True) for _ in next_batch ]  # with pin_memory=True and non_blocking=True, this will copy data to GPU non blockingly
-            
+            total_steps = (len(train_loader_dataset)+len(val_loader)) * config.num_epochs   
             Log_gpu_memory_usage(epoch)
             log_cpu_usage(epoch)
             
             for i, (images, captions, lengths) in enumerate(tqdm(train_loader_dataset, desc=f"Training Epoch {epoch+1}", dynamic_ncols=False, ncols=100)):
-                if i + 1 != len(train_loader_dataset): 
-                    next_batch = next(data_iter)  
-                    next_batch = [ _.cuda(non_blocking=True) for _ in next_batch]
                 # Move data to the correct device
                 images = images.to(device)
                 captions = captions.to(device)
